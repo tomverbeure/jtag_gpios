@@ -67,7 +67,7 @@ module jtag_gpios
         end
 
         if (!reset_) begin
-            gpio_outputs_ena <= {NR_GPIOS{1'b0}};;
+            gpio_outputs_ena <= {NR_GPIOS{1'b0}};
         end
     end
 

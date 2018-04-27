@@ -12,8 +12,6 @@ module top(
 	input	wire		button_
 );
 
-
-`ifdef ALTERA_VJTAG
 	wire		tck;
 	wire		tdi;
 	wire		tdo;
@@ -22,29 +20,19 @@ module top(
 
     wire        capture_dr, shift_dr, update_dr;
 
-	sld_virtual_jtag u_vjtag (
-		.tck				(tck),
-		.tdi				(tdi),
-		.tdo				(tdo),
-
-		.ir_out				(),
-		.ir_in				(ir),
-
-		.virtual_state_cdr	(capture_dr),
-		.virtual_state_cir  ( ),
-		.virtual_state_e1dr	( ),
-		.virtual_state_e2dr	( ),
-		.virtual_state_pdr	( ),
-		.virtual_state_sdr	(shift_dr),
-		.virtual_state_udr	(update_dr),
-		.virtual_state_uir	( )
-		);
-
-    defparam
-        u_vjtag.sld_auto_instance_index = "YES",
-        u_vjtag.sld_instance_index = 0,
-        u_vjtag.sld_ir_width = 4;
-`endif
+    jtag_tap_altera #(
+        .IR_BITS(4)
+    ) 
+    u_jtag_tap_altera 
+    (
+        .tck(tck),
+        .tdi(tdi),
+        .tdo(tdo),
+        .ir(ir),
+        .capture_dr(capture_dr),
+        .shift_dr(shift_dr),
+        .update_dr(update_dr)
+    );
 
     localparam  GPIO_DATA_IR   = 4'b0010;
     localparam  GPIO_CONFIG_IR = 4'b0011;
