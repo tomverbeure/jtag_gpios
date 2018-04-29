@@ -1,0 +1,60 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Sun Apr 29 23:20:57 2018
+[*]
+[dumpfile] "/home/vagrant/projects/jtag_gpios/tb/waves.vcd"
+[dumpfile_mtime] "Sun Apr 29 23:18:47 2018"
+[dumpfile_size] 1807067
+[savefile] "/home/vagrant/projects/jtag_gpios/tb/waves.gtkw"
+[timestart] 0
+[size] 1370 837
+[pos] -1 -1
+*-20.553894 2550000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] testbench.
+[treeopen] testbench.u_top.
+[sst_width] 224
+[signals_width] 309
+[sst_expanded] 1
+[sst_vpaned_height] 236
+@28
+testbench.clk
+testbench.trst_
+testbench.tck
+testbench.tdi
+testbench.tdo
+@29
+testbench.tdo_en
+@200
+-
+@28
+testbench.u_top.u_jtag_tap.tdo_pad_o
+testbench.u_top.u_jtag_tap.tdo_padoe_o
+@200
+-
+@28
+testbench.u_top.u_jtag_tap.capture_dr
+testbench.u_top.u_jtag_tap.shift_dr
+testbench.u_top.u_jtag_tap.update_dr
+@200
+-
+@28
+testbench.u_top.u_jtag_tap.capture_ir
+testbench.u_top.u_jtag_tap.shift_ir
+testbench.u_top.u_jtag_tap.update_ir
+@200
+-
+@28
+testbench.u_top.u_jtag_tap.bypass_select
+testbench.u_top.u_jtag_tap.idcode_select
+testbench.u_top.u_jtag_tap.gpio_config_select
+testbench.u_top.u_jtag_tap.gpio_data_select
+@22
+testbench.u_top.u_jtag_tap.latched_jtag_ir[3:0]
+@200
+-
+@28
+testbench.u_top.u_jtag_gpios.gpio_outputs_ena[2:0]
+testbench.u_top.u_jtag_gpios.gpio_outputs[2:0]
+testbench.u_top.u_jtag_gpios.gpio_inputs[2:0]
+[pattern_trace] 1
+[pattern_trace] 0
