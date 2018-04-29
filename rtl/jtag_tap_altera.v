@@ -1,10 +1,9 @@
-
 `define ALTERA_VJTAG
 //`define JTAG
 
 module jtag_tap_altera
     #( 
-        parameter IR_BITS    = 4 
+        parameter IR_BITS    = 4
     ) 
     (
         output wire                 tck,

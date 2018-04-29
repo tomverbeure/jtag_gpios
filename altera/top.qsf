@@ -35,6 +35,7 @@
 #
 # -------------------------------------------------------------------------- #
 
+set_global_assignment -name VERILOG_MACRO "JTAG_TAP_GENERIC=1"
 
 set_global_assignment -name FAMILY "Cyclone II"
 set_global_assignment -name DEVICE EP2C5T144C8
@@ -68,7 +69,10 @@ set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 
 set_global_assignment -name VERILOG_FILE ../rtl/jtag_tap_altera.v
+set_global_assignment -name VERILOG_FILE ../rtl/jtag_tap_generic.v
 set_global_assignment -name VERILOG_FILE ../rtl/jtag_gpios.v
 set_global_assignment -name VERILOG_FILE ../rtl/top.v
 set_global_assignment -name SDC_FILE timing.sdc
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+
+set_global_assignment -name VERILOG_SHOW_LMF_MAPPING_MESSAGES OFF
