@@ -3,7 +3,7 @@
 `include "jtag_tap_defines.v"
 
 module top(
-	input	wire		clk,
+    input   wire        clk,
 
 `ifdef JTAG_TAP_GENERIC
     input   wire        tck,
@@ -12,11 +12,11 @@ module top(
     output  wire        tdo,
 `endif
 
-	output	wire		led0,
-	output	wire		led1,
-	output	wire		led2,
+    output  wire        led0,
+    output  wire        led1,
+    output  wire        led2,
 
-	input	wire		button_
+    input   wire        button_
 );
 
     wire [`IR_LENGTH-1:0]  ir;
@@ -24,8 +24,8 @@ module top(
     wire        capture_dr, shift_dr, update_dr;
 
 `ifdef JTAG_TAP_ALTERA
-	wire		tck;
-	wire		tdi;
+    wire        tck;
+    wire        tdi;
 
     jtag_tap_altera #(
         .IR_BITS(`IR_LENGTH)
@@ -79,18 +79,18 @@ module top(
     wire [NR_GPIOS-1:0] gpio_inputs, gpio_outputs, gpio_outputs_ena;
     wire gpios_tdo;
 
-	jtag_gpios #(
+    jtag_gpios #(
         .NR_GPIOS(NR_GPIOS)
     )
     u_jtag_gpios (
         .reset_             (reset_),
-		.tck				(tck),
-		.tdi				(tdi),
-		.gpios_tdo			(gpios_tdo),
+        .tck                (tck),
+        .tdi                (tdi),
+        .gpios_tdo          (gpios_tdo),
 
-		.capture_dr	        (capture_dr),
-		.shift_dr	        (shift_dr),
-		.update_dr	        (update_dr),
+        .capture_dr         (capture_dr),
+        .shift_dr           (shift_dr),
+        .update_dr          (update_dr),
 
         .gpio_data_ir       (gpio_data_ir),
         .gpio_config_ir     (gpio_config_ir),
@@ -98,7 +98,7 @@ module top(
         .gpio_inputs        (gpio_inputs),
         .gpio_outputs       (gpio_outputs),
         .gpio_outputs_ena   (gpio_outputs_ena)
-	);
+    );
 
     assign led0 = gpio_outputs_ena[0] ? gpio_outputs[0] : 1'bz;
     assign led1 = gpio_outputs_ena[1] ? gpio_outputs[1] : 1'bz;
@@ -107,18 +107,18 @@ module top(
     assign gpio_inputs[1] = led1;
     assign gpio_inputs[2] = button_;
 
-	reg [31:0] counter;
+    reg [31:0] counter;
 
-	always @(posedge clk)
-	begin
-		if (!button_) begin
-			counter <= 0;
-		end
-		else begin
-			counter <= counter + 1'b1;
-		end
-	end
-	
-	assign led2 = ~counter[24];
+    always @(posedge clk)
+    begin
+        if (!button_) begin
+            counter <= 0;
+        end
+        else begin
+            counter <= counter + 1'b1;
+        end
+    end
+    
+    assign led2 = ~counter[24];
 
 endmodule
