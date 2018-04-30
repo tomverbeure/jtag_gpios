@@ -142,6 +142,7 @@ module testbench;
     task jtag_scan_dr;
         input [255:0]   vector_in;
         input integer   nr_bits;
+        input           early_out;
 
         integer i;
         begin
@@ -159,10 +160,23 @@ module testbench;
     
             // Shift vector, then go to EXIT1_DR
             jtag_scan_vector(vector_in, nr_bits, 1);
-    
-            // EXIT1_DR -> UPDATE_DR
+
             tdo_en = 0;
-            jtag_apply_tms(1);
+
+            if (early_out) begin
+                // EXIT1_DR -> UPDATE_DR
+                jtag_apply_tms(1);
+            end
+            else begin
+                // EXIT1_DR -> PAUSE_DR
+                jtag_apply_tms(0);
+
+                // PAUSE_DR -> EXIT2_DR
+                jtag_apply_tms(1);
+
+                // EXIT2_DR -> UPDATE_DR
+                jtag_apply_tms(1);
+            end
     
             // UPDATE_DR -> RUN_TEST_IDLE
             jtag_apply_tms(0);
@@ -217,27 +231,27 @@ module testbench;
         // Select IDCODE register
         //============================================================
         jtag_scan_ir(`IDCODE);
-        jtag_scan_dr(32'd0, 32);
+        jtag_scan_dr(32'd0, 32, 1);
 
         //============================================================
         // GPIOs
         //============================================================
         // All GPIOs output
         jtag_scan_ir(`GPIO_CONFIG);
-        jtag_scan_dr(3'b111, 3);
+        jtag_scan_dr(3'b111, 3, 0);
 
         // Set GPIO output values
         jtag_scan_ir(`GPIO_DATA);
-        jtag_scan_dr(3'b111, 3);
-        jtag_scan_dr(3'b000, 3);
-        jtag_scan_dr(3'd0, 3);
-        jtag_scan_dr(3'd1, 3);
-        jtag_scan_dr(3'd2, 3);
-        jtag_scan_dr(3'd3, 3);
-        jtag_scan_dr(3'd4, 3);
-        jtag_scan_dr(3'd5, 3);
-        jtag_scan_dr(3'd6, 3);
-        jtag_scan_dr(3'd7, 3);
+        jtag_scan_dr(3'b111, 3, 1);
+        jtag_scan_dr(3'b000, 3, 0);
+        jtag_scan_dr(3'd0, 3, 1);
+        jtag_scan_dr(3'd1, 3, 0);
+        jtag_scan_dr(3'd2, 3, 0);
+        jtag_scan_dr(3'd3, 3, 0);
+        jtag_scan_dr(3'd4, 3, 0);
+        jtag_scan_dr(3'd5, 3, 0);
+        jtag_scan_dr(3'd6, 3, 0);
+        jtag_scan_dr(3'd7, 3, 0);
 
     end
 
