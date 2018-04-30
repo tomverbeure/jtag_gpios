@@ -43,11 +43,11 @@ module jtag_gpios
                 capture_dr: begin
                     gpio_dr         <= gpio_inputs;
                 end
+                shift_dr: begin
+                    gpio_dr         <= { tdi, gpio_dr[NR_GPIOS-1:1] };
+                end
                 update_dr: begin
                     gpio_outputs    <= gpio_dr;
-                end
-                shift_dr: begin
-                    gpio_dr         <= { tdi, gpio_dr };
                 end
             endcase
         end
@@ -55,13 +55,13 @@ module jtag_gpios
         if (gpio_config_ir) begin
             case(1'b1) // synthesis parallel_case full_case
                 capture_dr: begin
-                    gpio_dr             <= gpio_outputs_ena;
-                end
-                update_dr: begin
-                    gpio_outputs_ena    <= gpio_dr;
+                    gpio_dr         <= gpio_outputs_ena;
                 end
                 shift_dr: begin
-                    gpio_dr         <= { tdi, gpio_dr };
+                    gpio_dr         <= { tdi, gpio_dr[NR_GPIOS-1:1] };
+                end
+                update_dr: begin
+                    gpio_outputs_ena<= gpio_dr;
                 end
             endcase
         end

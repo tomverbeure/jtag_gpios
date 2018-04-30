@@ -88,7 +88,7 @@ module top(
 		.tdi				(tdi),
 		.gpios_tdo			(gpios_tdo),
 
-		.capture_dr	        (update_dr),
+		.capture_dr	        (capture_dr),
 		.shift_dr	        (shift_dr),
 		.update_dr	        (update_dr),
 

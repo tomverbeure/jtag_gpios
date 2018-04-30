@@ -30,6 +30,8 @@ module testbench;
         .button_(button_)
     );
 
+    assign button_ = 1'b0;
+
     initial begin
 		clk		= 0;
 		forever begin
@@ -215,8 +217,27 @@ module testbench;
 		// Select IDCODE register
 		//============================================================
 		jtag_scan_ir(`IDCODE);
-
         jtag_scan_dr(32'd0, 32);
+
+		//============================================================
+		// GPIOs
+		//============================================================
+        // All GPIOs output
+		jtag_scan_ir(`GPIO_CONFIG);
+        jtag_scan_dr(3'b111, 3);
+
+        // Set GPIO output values
+		jtag_scan_ir(`GPIO_DATA);
+        jtag_scan_dr(3'b111, 3);
+        jtag_scan_dr(3'b000, 3);
+        jtag_scan_dr(3'd0, 3);
+        jtag_scan_dr(3'd1, 3);
+        jtag_scan_dr(3'd2, 3);
+        jtag_scan_dr(3'd3, 3);
+        jtag_scan_dr(3'd4, 3);
+        jtag_scan_dr(3'd5, 3);
+        jtag_scan_dr(3'd6, 3);
+        jtag_scan_dr(3'd7, 3);
 
 	end
 
