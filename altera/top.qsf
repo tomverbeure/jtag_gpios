@@ -76,3 +76,9 @@ set_global_assignment -name SDC_FILE timing.sdc
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 
 set_global_assignment -name VERILOG_SHOW_LMF_MAPPING_MESSAGES OFF
+
+set_location_assignment PIN_96 -to tck
+set_location_assignment PIN_104 -to tdi
+set_location_assignment PIN_99 -to tdo
+set_location_assignment PIN_101 -to tms
+set_global_assignment -name CDF_FILE jtag_gpios.cdf

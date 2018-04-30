@@ -112,7 +112,7 @@ module testbench;
 
 		integer i;
 		begin
-			$display("%t: Set IR", $time);
+			$display("%t: Set IR 0x%02x", $time, wanted_ir);
 
 			// Go to Select-IR-Scan
 			tms = 1;
@@ -123,18 +123,11 @@ module testbench;
 			@(negedge tck);
 
 			// Go to Shift-IR
-            tdo_en = 1;
 			tms = 0;
 			@(negedge tck);
 
-			for(i=0; i<IR_LENGTH; i=i+1) begin
-				tdi = wanted_ir[i];
-
-				if (i == IR_LENGTH-1) begin
-					tms = 1;			// Go to Exit1-IR
-				end
-				@(negedge tck);
-			end
+            tdo_en = 1;
+		    jtag_scan_vector(wanted_ir, IR_LENGTH, 1);
 
 			// Go to Update-IR
             tdo_en = 0;

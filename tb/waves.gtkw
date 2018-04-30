@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Sun Apr 29 23:20:57 2018
+[*] Mon Apr 30 00:05:57 2018
 [*]
 [dumpfile] "/home/vagrant/projects/jtag_gpios/tb/waves.vcd"
-[dumpfile_mtime] "Sun Apr 29 23:18:47 2018"
-[dumpfile_size] 1807067
+[dumpfile_mtime] "Sun Apr 29 23:59:44 2018"
+[dumpfile_size] 1807013
 [savefile] "/home/vagrant/projects/jtag_gpios/tb/waves.gtkw"
 [timestart] 0
 [size] 1370 837
 [pos] -1 -1
-*-20.553894 2550000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-20.553894 875000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbench.
 [treeopen] testbench.u_top.
 [sst_width] 224
@@ -22,7 +22,6 @@ testbench.trst_
 testbench.tck
 testbench.tdi
 testbench.tdo
-@29
 testbench.tdo_en
 @200
 -
@@ -32,15 +31,28 @@ testbench.u_top.u_jtag_tap.tdo_padoe_o
 @200
 -
 @28
-testbench.u_top.u_jtag_tap.capture_dr
-testbench.u_top.u_jtag_tap.shift_dr
-testbench.u_top.u_jtag_tap.update_dr
+testbench.u_top.u_jtag_tap.test_logic_reset
+testbench.u_top.u_jtag_tap.run_test_idle
+testbench.u_top.u_jtag_tap.select_dr_scan
 @200
 -
 @28
+testbench.u_top.u_jtag_tap.capture_dr
+testbench.u_top.u_jtag_tap.shift_dr
+testbench.u_top.u_jtag_tap.exit1_dr
+testbench.u_top.u_jtag_tap.update_dr
+testbench.u_top.u_jtag_tap.pause_dr
+testbench.u_top.u_jtag_tap.exit2_dr
+@200
+-
+@28
+testbench.u_top.u_jtag_tap.select_ir_scan
 testbench.u_top.u_jtag_tap.capture_ir
 testbench.u_top.u_jtag_tap.shift_ir
+testbench.u_top.u_jtag_tap.exit1_ir
 testbench.u_top.u_jtag_tap.update_ir
+testbench.u_top.u_jtag_tap.pause_ir
+testbench.u_top.u_jtag_tap.exit2_ir
 @200
 -
 @28
