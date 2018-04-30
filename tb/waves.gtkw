@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Mon Apr 30 00:05:57 2018
+[*] Mon Apr 30 00:28:34 2018
 [*]
 [dumpfile] "/home/vagrant/projects/jtag_gpios/tb/waves.vcd"
-[dumpfile_mtime] "Sun Apr 29 23:59:44 2018"
-[dumpfile_size] 1807013
+[dumpfile_mtime] "Mon Apr 30 00:28:27 2018"
+[dumpfile_size] 1809432
 [savefile] "/home/vagrant/projects/jtag_gpios/tb/waves.gtkw"
-[timestart] 0
+[timestart] 15000
 [size] 1370 837
 [pos] -1 -1
-*-20.553894 875000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-18.553894 500000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbench.
 [treeopen] testbench.u_top.
 [sst_width] 224
@@ -20,6 +20,9 @@
 testbench.clk
 testbench.trst_
 testbench.tck
+@29
+testbench.tms
+@28
 testbench.tdi
 testbench.tdo
 testbench.tdo_en
@@ -30,6 +33,8 @@ testbench.u_top.u_jtag_tap.tdo_pad_o
 testbench.u_top.u_jtag_tap.tdo_padoe_o
 @200
 -
+@820
+testbench.jtag_state_text[0:255]
 @28
 testbench.u_top.u_jtag_tap.test_logic_reset
 testbench.u_top.u_jtag_tap.run_test_idle

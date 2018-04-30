@@ -69,21 +69,18 @@ module testbench;
 	task jtag_apply_tms;
 		input tms_in;
 		begin
+            //$display("Apply TMS %d", tms_in);
 			tms = tms_in;
 			@(negedge tck);
 		end
 	endtask
 
-	task jtag_reset_to_select_dr_scan;
+	task jtag_reset_to_run_test_idle;
 		begin
-			$display("%t: Reset to Select-DR-Scan", $time);
+			$display("%t: Reset to Run-Test-Idle", $time);
 
 			// Go to RTI
 			tms = 0;
-			@(negedge tck);
-
-			// Go to Select-DR-Scan
-			tms = 1;
 			@(negedge tck);
 		end
 	endtask
@@ -114,29 +111,28 @@ module testbench;
 		begin
 			$display("%t: Set IR 0x%02x", $time, wanted_ir);
 
+			// Go to Select-DR-Scan
+		    jtag_apply_tms(1);
+
 			// Go to Select-IR-Scan
-			tms = 1;
-			@(negedge tck);
+		    jtag_apply_tms(1);
 
 			// Go to Capture-IR
-			tms = 0;
-			@(negedge tck);
+		    jtag_apply_tms(0);
 
 			// Go to Shift-IR
-			tms = 0;
-			@(negedge tck);
-
+		    jtag_apply_tms(0);
             tdo_en = 1;
-		    jtag_scan_vector(wanted_ir, IR_LENGTH, 1);
+
+            jtag_scan_vector(wanted_ir, IR_LENGTH, 1);
 
 			// Go to Update-IR
             tdo_en = 0;
-			tms = 1;
-			@(negedge tck);
 
-			// Go to Select-DR-Scan
-			tms = 1;
-			@(negedge tck);
+		    jtag_apply_tms(1);
+
+			// Go to Run Test Idle
+		    jtag_apply_tms(0);
 		end
 	endtask
 
@@ -151,12 +147,15 @@ module testbench;
 
 		jtag_clocked_reset();
 
-		jtag_reset_to_select_dr_scan();
+		jtag_reset_to_run_test_idle();
 
 		//============================================================
 		// Default IR should be IDCODE. Shift it out...
 		//============================================================
-
+        
+		// SELECT_DR_SCAN
+		jtag_apply_tms(1);
+        
 		// CAPTURE_DR
 		jtag_apply_tms(0);
 
@@ -171,8 +170,8 @@ module testbench;
         tdo_en = 0;
 		jtag_apply_tms(1);
 
-		// UPDATE_DR -> SELECT_DR_SCAN
-		jtag_apply_tms(1);
+		// UPDATE_DR -> RUN_TEST_IDLE
+		jtag_apply_tms(0);
 
 		$display("%t: IDCODE scanned out: %x", $time, captured_tdo_vec[31:0]);
 
