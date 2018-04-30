@@ -104,7 +104,7 @@ module testbench;
 		end
 	endtask
 
-	task jtag_set_ir;
+	task jtag_scan_ir;
 		input [IR_LENGTH-1:0] wanted_ir;
 
 		integer i;
@@ -124,6 +124,7 @@ module testbench;
 		    jtag_apply_tms(0);
             tdo_en = 1;
 
+            // Shift vector, then go to EXIT1_IR
             jtag_scan_vector(wanted_ir, IR_LENGTH, 1);
 
 			// Go to Update-IR
@@ -136,6 +137,35 @@ module testbench;
 		end
 	endtask
 
+	task jtag_scan_dr;
+		input [255:0] 	vector_in;
+		input integer 	nr_bits;
+
+        integer i;
+        begin
+			$display("%t: Set DR to 0x%x", $time, vector_in);
+
+			// Go to Select-DR-Scan
+		    jtag_apply_tms(1);
+
+    		// CAPTURE_DR
+    		jtag_apply_tms(0);
+    
+    		// SHIFT_DR
+    		jtag_apply_tms(0);
+            tdo_en = 1;
+    
+            // Shift vector, then go to EXIT1_DR
+    		jtag_scan_vector(vector_in, nr_bits, 1);
+    
+    		// EXIT1_DR -> UPDATE_DR
+            tdo_en = 0;
+    		jtag_apply_tms(1);
+    
+    		// UPDATE_DR -> RUN_TEST_IDLE
+    		jtag_apply_tms(0);
+        end
+    endtask
 
 	initial begin
 		tdi = 0;
@@ -178,31 +208,15 @@ module testbench;
 		//============================================================
 		// Select IR 0xa
 		//============================================================
-		jtag_set_ir(4'b1111);
-		jtag_set_ir(4'ha);
+		jtag_scan_ir(4'b1111);
+		jtag_scan_ir(4'ha);
 
 		//============================================================
-		// Select BYPASS register
+		// Select IDCODE register
 		//============================================================
-		jtag_set_ir(4'b1111);
+		jtag_scan_ir(`IDCODE);
 
-		// CAPTURE_DR
-		jtag_apply_tms(0);
-
-		// SHIFT_DR
-		jtag_apply_tms(0);
-
-		// Scan vector, but stay in DR_SCAN
-		jtag_scan_vector(8'hc1, 8, 0);
-
-		// Scan out last bit out of BYPASS, then go to EXIT1_DR
-		jtag_scan_vector(1'h0, 1, 1);
-
-		// EXIT1_DR -> UPDATE_DR
-		jtag_apply_tms(1);
-
-		// UPDATE_DR -> SELECT_DR_SCAN
-		jtag_apply_tms(1);
+        jtag_scan_dr(32'd0, 32);
 
 	end
 

@@ -532,8 +532,7 @@ end
 // Updating jtag_ir (Instruction Register)
 always @ (posedge tck_pad_i or posedge trst_pad_i)
 begin
-  if(trst_pad_i)
-    latched_jtag_ir <= `IDCODE;   // IDCODE selected after reset
+  if(trst_pad_i) latched_jtag_ir <= `IDCODE;   // IDCODE selected after reset
   else if (tms_reset)
     latched_jtag_ir <= `IDCODE;   // IDCODE selected after reset
   else if(update_ir)
@@ -559,8 +558,7 @@ begin
     `IDCODE:            idcode_select           = 1'b1;    // ID Code
     `BYPASS:            bypass_select           = 1'b1;    // BYPASS
     `GPIO_CONFIG:       gpio_config_select      = 1'b1;
-    `GPIO_CONFIG:       gpio_data_select        = 1'b1;
-    default:            bypass_select           = 1'b1;    // BYPASS
+    `GPIO_DATA:         gpio_data_select        = 1'b1;
   endcase
 end
 
