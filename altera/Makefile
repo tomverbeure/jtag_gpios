@@ -1,4 +1,5 @@
 
+all: synth_generic
 
 synth_altera:
 	cp jtag_tap_altera.tcl jtag_tap.tcl
