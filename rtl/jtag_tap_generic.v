@@ -125,7 +125,7 @@ module jtag_tap_generic(
                 
                 // TDO from different JTAG modules
                 gpio_config_tdo_i,
-                gpio_data_tdo_i,
+                gpio_data_tdo_i
               );
 
 
@@ -177,7 +177,6 @@ reg     tdo_padoe_o;
 reg     tms_q1, tms_q2, tms_q3, tms_q4;
 wire    tms_reset;
 
-assign tdo_o = tdi_pad_i;
 assign shift_dr_o = shift_dr;
 assign pause_dr_o = pause_dr;
 assign update_dr_o = update_dr;
@@ -561,8 +560,6 @@ begin
     `GPIO_DATA:         gpio_data_select        = 1'b1;
   endcase
 end
-
-assign ir_o = latched_jtag_ir;
 
 /**********************************************************************************
 *                                                                                 *

@@ -39,7 +39,7 @@ module jtag_gpios
     always @(posedge tck) 
     begin
         if (gpio_data_ir) begin
-            case(1'b1) // synthesis parallel_case full_case
+            case(1'b1) // synthesis parallel_case
                 capture_dr: begin
                     gpio_dr         <= gpio_inputs;
                 end
@@ -53,7 +53,7 @@ module jtag_gpios
         end
 
         if (gpio_config_ir) begin
-            case(1'b1) // synthesis parallel_case full_case
+            case(1'b1) // synthesis parallel_case
                 capture_dr: begin
                     gpio_dr         <= gpio_outputs_ena;
                 end
