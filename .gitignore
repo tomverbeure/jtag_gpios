@@ -4,3 +4,4 @@ altera/output_files
 altera/simulation
 altera/db
 altera/incremental_db
+.*.swp
