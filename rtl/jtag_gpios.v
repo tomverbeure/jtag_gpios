@@ -34,7 +34,12 @@ module jtag_gpios
     // There is only 1 shift register because we use capture_dr for both
     // IRs. So since the shift register updated before the scan operation
     // anyway, the previous value of the shift register doesn't matter.
-    reg [NR_GPIOS-1:0]  gpio_dr;
+    //
+    // The MSB of gpio_dr is used only during the update_dr phase and determines
+    // whether or not the data that has been scanned in is actually used
+    // to update the target register.
+    // By setting it to 0, read-only operations are possible.
+    reg [NR_GPIOS:0]  gpio_dr;
 
     always @(posedge tck) 
     begin
@@ -44,10 +49,12 @@ module jtag_gpios
                     gpio_dr         <= gpio_inputs;
                 end
                 shift_dr: begin
-                    gpio_dr         <= { tdi, gpio_dr[NR_GPIOS-1:1] };
+                    gpio_dr         <= { tdi, gpio_dr[NR_GPIOS:1] };
                 end
                 update_dr: begin
-                    gpio_outputs    <= gpio_dr;
+                    if (gpio_dr[NR_GPIOS]) begin
+                        gpio_outputs    <= gpio_dr;
+                    end
                 end
             endcase
         end
@@ -58,10 +65,12 @@ module jtag_gpios
                     gpio_dr         <= gpio_outputs_ena;
                 end
                 shift_dr: begin
-                    gpio_dr         <= { tdi, gpio_dr[NR_GPIOS-1:1] };
+                    gpio_dr         <= { tdi, gpio_dr[NR_GPIOS:1] };
                 end
                 update_dr: begin
-                    gpio_outputs_ena<= gpio_dr;
+                    if (gpio_dr[NR_GPIOS]) begin
+                        gpio_outputs_ena    <= gpio_dr;
+                    end
                 end
             endcase
         end

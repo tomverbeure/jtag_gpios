@@ -237,21 +237,26 @@ module testbench;
         // GPIOs
         //============================================================
         // All GPIOs output
+        $display("GPIO_CONFIG");
         jtag_scan_ir(`GPIO_CONFIG);
-        jtag_scan_dr(3'b111, 3, 0);
+        jtag_scan_dr(4'b1111, 4, 0);
+
+        // capture_dr without update_dr (to read back the value)
+        jtag_scan_dr(4'b0000, 4, 0);
 
         // Set GPIO output values
+        $display("GPIO_DATA");
         jtag_scan_ir(`GPIO_DATA);
-        jtag_scan_dr(3'b111, 3, 1);
-        jtag_scan_dr(3'b000, 3, 0);
-        jtag_scan_dr(3'd0, 3, 1);
-        jtag_scan_dr(3'd1, 3, 0);
-        jtag_scan_dr(3'd2, 3, 0);
-        jtag_scan_dr(3'd3, 3, 0);
-        jtag_scan_dr(3'd4, 3, 0);
-        jtag_scan_dr(3'd5, 3, 0);
-        jtag_scan_dr(3'd6, 3, 0);
-        jtag_scan_dr(3'd7, 3, 0);
+        jtag_scan_dr(4'b1111, 4, 1);
+        jtag_scan_dr(4'b1000, 4, 0);
+        jtag_scan_dr(4'b1001, 4, 1);
+        jtag_scan_dr(4'b1010, 4, 0);
+        jtag_scan_dr(4'b1011, 4, 0);
+        jtag_scan_dr(4'b1100, 4, 0);
+        jtag_scan_dr(4'b1101, 4, 0);
+        jtag_scan_dr(4'b1110, 4, 0);
+        jtag_scan_dr(4'b1111, 4, 0);
+        jtag_scan_dr(4'b1000, 4, 0);
 
     end
 
