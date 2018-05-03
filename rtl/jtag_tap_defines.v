@@ -65,6 +65,6 @@
 
 // Supported Instructions
 `define BYPASS          4'b1111
-`define IDCODE          4'b0010
-`define GPIO_DATA       4'b0100   
-`define GPIO_CONFIG     4'b0101   
+`define IDCODE          4'b1110
+`define SCAN_N          4'b0010
+`define EXTEST          4'b0011

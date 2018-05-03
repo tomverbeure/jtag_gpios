@@ -23,8 +23,8 @@ module jtag_gpios
         input               update_dr,
 
         // Current active instruction
-        input               gpio_data_ir,
-        input               gpio_config_ir,
+        input               scan_n_ir,
+        input               extest_ir,
 
         input      [NR_GPIOS-1:0]   gpio_inputs,
         output reg [NR_GPIOS-1:0]   gpio_outputs,
@@ -41,25 +41,19 @@ module jtag_gpios
     // By setting it to 0, read-only operations are possible.
     reg [NR_GPIOS:0]  gpio_dr;
 
+    // Currently selected register: 0 -> config, 1 -> data
+    reg scan_n;
+
     always @(posedge tck) 
     begin
-        if (gpio_data_ir) begin
-            case(1'b1) // synthesis parallel_case
-                capture_dr: begin
-                    gpio_dr         <= gpio_inputs;
-                end
-                shift_dr: begin
-                    gpio_dr         <= { tdi, gpio_dr[NR_GPIOS:1] };
-                end
-                update_dr: begin
-                    if (gpio_dr[NR_GPIOS]) begin
-                        gpio_outputs    <= gpio_dr;
-                    end
-                end
-            endcase
+        if (scan_n_ir) begin
+            if (shift_dr) begin
+                scan_n  <= tdi;
+            end
         end
 
-        if (gpio_config_ir) begin
+        // CONFIG
+        if (extest_ir && !scan_n) begin
             case(1'b1) // synthesis parallel_case
                 capture_dr: begin
                     gpio_dr         <= gpio_outputs_ena;
@@ -75,11 +69,30 @@ module jtag_gpios
             endcase
         end
 
+        // DATA
+        if (extest_ir && scan_n) begin
+            case(1'b1) // synthesis parallel_case
+                capture_dr: begin
+                    gpio_dr         <= gpio_inputs;
+                end
+                shift_dr: begin
+                    gpio_dr         <= { tdi, gpio_dr[NR_GPIOS:1] };
+                end
+                update_dr: begin
+                    if (gpio_dr[NR_GPIOS]) begin
+                        gpio_outputs    <= gpio_dr;
+                    end
+                end
+            endcase
+        end
+
+
         if (!reset_) begin
             gpio_outputs_ena <= {NR_GPIOS{1'b0}};
         end
     end
 
-    assign gpios_tdo = gpio_dr[0];
+    assign gpios_tdo = scan_n_ir ? scan_n
+                                 : gpio_dr[0];
 
 endmodule

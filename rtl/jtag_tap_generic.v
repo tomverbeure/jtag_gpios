@@ -120,12 +120,10 @@ module jtag_tap_generic(
                 capture_dr_o,
                 
                 // Select signals for boundary scan or mbist
-                gpio_config_select_o,
-                gpio_data_select_o,
+                ir_o,
                 
                 // TDO from different JTAG modules
-                gpio_config_tdo_i,
-                gpio_data_tdo_i
+                tdo_i
               );
 
 
@@ -144,12 +142,10 @@ output  update_dr_o;
 output  capture_dr_o;
 
 // Used to externally decode additional instruction
-output gpio_config_select_o;
-output gpio_data_select_o;
+output [`IR_LENGTH-1:0] ir_o;
 
 // TDI signals from sub-modules
-input   gpio_config_tdo_i;
-input   gpio_data_tdo_i;
+input   tdo_i;
 
 // Registers
 reg     test_logic_reset;
@@ -170,8 +166,6 @@ reg     exit2_ir;
 reg     update_ir;
 reg     idcode_select;
 reg     bypass_select;
-reg     gpio_config_select;
-reg     gpio_data_select;
 reg     tdo_pad_o;
 reg     tdo_padoe_o;
 reg     tms_q1, tms_q2, tms_q3, tms_q4;
@@ -181,10 +175,6 @@ assign shift_dr_o = shift_dr;
 assign pause_dr_o = pause_dr;
 assign update_dr_o = update_dr;
 assign capture_dr_o = capture_dr;
-
-assign gpio_config_select_o = gpio_config_select;
-assign gpio_data_select_o = gpio_data_select;
-
 
 always @ (posedge tck_pad_i)
 begin
@@ -475,7 +465,6 @@ end
 *                                                                                 *
 **********************************************************************************/
 reg [31:0] idcode_reg;
-reg        idcode_tdo;
 
 always @ (posedge tck_pad_i)
 begin
@@ -485,23 +474,11 @@ begin
     idcode_reg <=  `IDCODE_VALUE;
 end
 
-always @ (negedge tck_pad_i)
-begin
-    idcode_tdo <=  idcode_reg[0];
-end
-/**********************************************************************************
-*                                                                                 *
-*   End: idcode logic                                                             *
-*                                                                                 *
-**********************************************************************************/
-
-
 /**********************************************************************************
 *                                                                                 *
 *   Bypass logic                                                                  *
 *                                                                                 *
 **********************************************************************************/
-reg  bypassed_tdo;
 reg  bypass_reg;
 
 always @ (posedge tck_pad_i or posedge trst_pad_i)
@@ -512,16 +489,15 @@ begin
     bypass_reg<= tdi_pad_i;
 end
 
+reg  idcode_tdo;
+reg  bypassed_tdo;
+reg  ext_tdo;
 always @ (negedge tck_pad_i)
 begin
+  idcode_tdo <=  idcode_reg[0];
   bypassed_tdo <= bypass_reg;
+  ext_tdo <= tdo_i;
 end
-/**********************************************************************************
-*                                                                                 *
-*   End: Bypass logic                                                             *
-*                                                                                 *
-**********************************************************************************/
-
 
 /**********************************************************************************
 *                                                                                 *
@@ -538,6 +514,8 @@ begin
     latched_jtag_ir <= jtag_ir;
 end
 
+assign ir_o = latched_jtag_ir;
+
 /**********************************************************************************
 *                                                                                 *
 *   End: Activating Instructions                                                  *
@@ -550,14 +528,10 @@ always @ (latched_jtag_ir)
 begin
   idcode_select           = 1'b0;
   bypass_select           = 1'b0;
-  gpio_config_select      = 1'b0;
-  gpio_data_select      = 1'b0;
 
   case(latched_jtag_ir)    /* synthesis parallel_case */ 
     `IDCODE:            idcode_select           = 1'b1;    // ID Code
     `BYPASS:            bypass_select           = 1'b1;    // BYPASS
-    `GPIO_CONFIG:       gpio_config_select      = 1'b1;
-    `GPIO_DATA:         gpio_data_select        = 1'b1;
   endcase
 end
 
@@ -575,9 +549,7 @@ begin
       case(latched_jtag_ir_neg)    // synthesis parallel_case
         `IDCODE:            tdo_pad_o = idcode_tdo;       // Reading ID code
         `BYPASS:            tdo_pad_o = bypassed_tdo;     // BYPASS instruction
-        `GPIO_CONFIG:       tdo_pad_o = gpio_config_tdo_i;
-        `GPIO_DATA:         tdo_pad_o = gpio_data_tdo_i;
-        default:            tdo_pad_o = bypassed_tdo;     // BYPASS instruction
+        default:            tdo_pad_o = ext_tdo;          // Whatever comes from outside
       endcase
     end
 end

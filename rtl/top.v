@@ -34,16 +34,13 @@ module top(
     (
         .tck(tck),
         .tdi(tdi),
-        .tdo(gpios_tdo),
+        .tdo(tdo2tap),
         .ir(ir),
         .capture_dr(capture_dr),
         .shift_dr(shift_dr),
         .update_dr(update_dr)
     );
 
-    wire gpio_data_ir, gpio_config_ir;
-    assign gpio_data_ir   = (ir == `GPIO_DATA);
-    assign gpio_config_ir = (ir == `GPIO_CONFIG);
 `endif
 
 `ifdef JTAG_TAP_GENERIC
@@ -51,16 +48,15 @@ module top(
 
     jtag_tap_generic u_jtag_tap
     (
+        .trst_pad_i(1'b0),
         .tck_pad_i(tck),
         .tms_pad_i(tms),
         .tdi_pad_i(tdi),
         .tdo_pad_o(tdo),
 
-        .gpio_config_select_o(gpio_config_ir),
-        .gpio_data_select_o(gpio_data_ir),
+        .ir_o(ir),
 
-        .gpio_config_tdo_i(gpios_tdo),
-        .gpio_data_tdo_i(gpios_tdo),
+        .tdo_i(tdo2tap),
 
         .capture_dr_o(capture_dr),
         .shift_dr_o(shift_dr),
@@ -68,6 +64,19 @@ module top(
     );
 `endif
 
+    reg bypass_tdo;
+    always @(posedge tck)
+    begin
+        bypass_tdo <= tdi;
+    end
+
+    wire scan_n_ir, extest_ir;
+    assign scan_n_ir = (ir == `SCAN_N);
+    assign extest_ir = (ir == `EXTEST);
+
+    wire tdo2tap;
+    assign tdo2tap = (scan_n_ir | extest_ir) ? gpios_tdo 
+                                             : bypass_tdo;
 
     reg reset_;
     always @(posedge clk) begin
@@ -92,8 +101,8 @@ module top(
         .shift_dr           (shift_dr),
         .update_dr          (update_dr),
 
-        .gpio_data_ir       (gpio_data_ir),
-        .gpio_config_ir     (gpio_config_ir),
+        .scan_n_ir          (scan_n_ir),
+        .extest_ir          (extest_ir),
 
         .gpio_inputs        (gpio_inputs),
         .gpio_outputs       (gpio_outputs),
