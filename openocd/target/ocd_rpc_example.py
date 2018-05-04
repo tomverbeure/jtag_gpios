@@ -97,21 +97,24 @@ class OpenOcd:
 if __name__ == "__main__":
 
     def show(*args):
-        print(*args, end="\n\n")
+        print(*args, end="")
 
     with OpenOcd() as ocd:
         ocd.send("reset")
 
         show(ocd.send("ocd_echo \"Hello from RPC example!\"")[:-1])
 
-        show(ocd.send("gpios settings 0 1"))
-        show(ocd.send("gpios settings 1 1"))
+        show(ocd.send("ocd_gpios settings 0 1"))
+        show(ocd.send("ocd_gpios settings 1 1"))
 
         for _ in range(20):
-            ocd.send("gpios set_pin 0 1")
-            ocd.send("gpios set_pin 1 0")
-            ocd.send("sleep 100")
-            ocd.send("gpios set_pin 0 0")
-            ocd.send("gpios set_pin 1 1")
-            ocd.send("sleep 100")
+            show(ocd.send("ocd_gpios set_pin 0 1"))
+            show(ocd.send("ocd_gpios set_pin 1 0"))
+            show(ocd.send("ocd_sleep 100"))
+            show(ocd.send("ocd_gpios set_pin 0 0"))
+            show(ocd.send("ocd_gpios set_pin 1 1"))
+            show(ocd.send("ocd_sleep 100"))
+
+        value = ocd.send("ocd_gpios get_pin 0")
+        print(value)
             
