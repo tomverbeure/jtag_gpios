@@ -9,7 +9,7 @@ chip.bin: chip.blif $(PCF_FILE)
 	arachne-pnr -d 8k -P tq144:4k -p $(PCF_FILE) chip.blif -o chip.asc
 	icepack chip.asc chip.bin
 
-chip.blif: $(VERILOG_FILES) 
+chip.blif: $(VERILOG_FILES) $(SRC_DIR)/top.v
 	yosys -q -p "synth_ice40 -blif chip.blif" $(VERILOG_FILES)
 
 time: chip.bin
