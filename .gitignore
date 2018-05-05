@@ -5,3 +5,4 @@ altera/simulation
 altera/db
 altera/incremental_db
 .*.swp
+*.bak

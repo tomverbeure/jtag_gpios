@@ -1,7 +1,7 @@
 
 RTL_DIR=../rtl/
 
-VERILOG_COMMON = $(RTL_DIR)/top.v $(RTL_DIR)/jtag_gpios.v 
+VERILOG_COMMON = $(RTL_DIR)/top.v $(RTL_DIR)/jtag_top.v $(RTL_DIR)/jtag_gpios.v 
 VERILOG_GENERIC = $(VERILOG_COMMON) $(RTL_DIR)/jtag_tap_generic.v
 VERILOG_ALTERA = $(VERILOG_COMMON) $(RTL_DIR)/jtag_tap_altera.v
 

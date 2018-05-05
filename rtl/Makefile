@@ -1,5 +1,5 @@
 
-VERILOG_COMMON = top.v jtag_gpios.v 
+VERILOG_COMMON = top.v jtag_top.v jtag_gpios.v 
 VERILOG_GENERIC = $(VERILOG_COMMON) jtag_tap_generic.v
 VERILOG_ALTERA = $(VERILOG_COMMON) jtag_tap_altera.v
 

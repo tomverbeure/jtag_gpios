@@ -468,7 +468,7 @@ reg [31:0] idcode_reg;
 
 always @ (posedge tck_pad_i)
 begin
-  if(idcode_select & shift_dr)
+  if (idcode_select & shift_dr)
     idcode_reg <=  {tdi_pad_i, idcode_reg[31:1]};
   else
     idcode_reg <=  `IDCODE_VALUE;
@@ -484,14 +484,15 @@ reg  bypass_reg;
 always @ (posedge tck_pad_i or posedge trst_pad_i)
 begin
   if (trst_pad_i)
-    bypass_reg<= 1'b0;
-  else if(shift_dr)
-    bypass_reg<= tdi_pad_i;
+    bypass_reg <= 1'b0;
+  else if (bypass_select & shift_dr)
+    bypass_reg <= tdi_pad_i;
 end
 
 reg  idcode_tdo;
 reg  bypassed_tdo;
 reg  ext_tdo;
+
 always @ (negedge tck_pad_i)
 begin
   idcode_tdo <=  idcode_reg[0];
@@ -565,7 +566,6 @@ end
 *   End: Multiplexing TDO data                                                    *
 *                                                                                 *
 **********************************************************************************/
-
 
 always @ (negedge tck_pad_i)
 begin

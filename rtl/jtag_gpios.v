@@ -63,7 +63,7 @@ module jtag_gpios
                 end
                 update_dr: begin
                     if (gpio_dr[NR_GPIOS]) begin
-                        gpio_outputs_ena    <= gpio_dr;
+                        gpio_outputs_ena    <= gpio_dr[NR_GPIOS-1:0];
                     end
                 end
             endcase
@@ -80,7 +80,7 @@ module jtag_gpios
                 end
                 update_dr: begin
                     if (gpio_dr[NR_GPIOS]) begin
-                        gpio_outputs    <= gpio_dr;
+                        gpio_outputs    <= gpio_dr[NR_GPIOS-1:0];
                     end
                 end
             endcase

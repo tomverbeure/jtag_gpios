@@ -1,19 +1,20 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Mon Apr 30 03:55:59 2018
+[*] Sat May  5 01:05:54 2018
 [*]
 [dumpfile] "/home/vagrant/projects/jtag_gpios/tb/waves.vcd"
-[dumpfile_mtime] "Mon Apr 30 03:55:53 2018"
-[dumpfile_size] 1813715
+[dumpfile_mtime] "Sat May  5 01:04:57 2018"
+[dumpfile_size] 1816550
 [savefile] "/home/vagrant/projects/jtag_gpios/tb/waves.gtkw"
-[timestart] 400000
+[timestart] 5140000
 [size] 1370 837
 [pos] -1 -1
-*-21.553894 6980000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-21.637005 9175000 6975000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbench.
 [treeopen] testbench.u_top.
+[treeopen] testbench.u_top.u_jtag_top.
 [sst_width] 224
-[signals_width] 309
+[signals_width] 342
 [sst_expanded] 1
 [sst_vpaned_height] 236
 @28
@@ -26,53 +27,20 @@ testbench.tdo
 testbench.tdo_en
 @200
 -
-@28
-testbench.u_top.u_jtag_tap.tdo_pad_o
-testbench.u_top.u_jtag_tap.tdo_padoe_o
-@200
 -
-@28
-testbench.u_top.u_jtag_tap.test_logic_reset
-testbench.u_top.u_jtag_tap.run_test_idle
-testbench.u_top.u_jtag_tap.select_dr_scan
-@200
--
-@28
-testbench.u_top.u_jtag_tap.capture_dr
-testbench.u_top.u_jtag_tap.shift_dr
-testbench.u_top.u_jtag_tap.exit1_dr
-testbench.u_top.u_jtag_tap.update_dr
-testbench.u_top.u_jtag_tap.pause_dr
-testbench.u_top.u_jtag_tap.exit2_dr
-@200
--
-@28
-testbench.u_top.u_jtag_tap.select_ir_scan
-testbench.u_top.u_jtag_tap.capture_ir
-testbench.u_top.u_jtag_tap.shift_ir
-testbench.u_top.u_jtag_tap.exit1_ir
-testbench.u_top.u_jtag_tap.update_ir
-testbench.u_top.u_jtag_tap.pause_ir
-testbench.u_top.u_jtag_tap.exit2_ir
-@200
--
-@28
-testbench.u_top.u_jtag_tap.bypass_select
-testbench.u_top.u_jtag_tap.idcode_select
-testbench.u_top.u_jtag_tap.gpio_config_select
-testbench.u_top.u_jtag_tap.gpio_data_select
-@22
-testbench.u_top.u_jtag_tap.latched_jtag_ir[3:0]
-@200
--
-@28
-testbench.u_top.u_jtag_gpios.gpio_outputs_ena[2:0]
-testbench.u_top.u_jtag_gpios.gpio_outputs[2:0]
 @29
-testbench.u_top.u_jtag_gpios.gpio_inputs[2:0]
+testbench.u_top.gpio_inputs[2:0]
+testbench.u_top.gpio_outputs[2:0]
+testbench.u_top.gpio_outputs_ena[2:0]
+@200
+-
 @28
 testbench.u_top.led0
 testbench.u_top.led1
 testbench.u_top.led2
+@200
+-
+@28
+testbench.u_top.tdo
 [pattern_trace] 1
 [pattern_trace] 0
