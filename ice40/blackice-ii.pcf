@@ -1,10 +1,10 @@
 
 
 # PMOD 3 - JTAG interface
-set_io tck 	105 	# P8
-set_io tms	102 	# P9
-set_io tdi	99 	# P10
-set_io tdo	97 	# P11
+set_io tdo 	105 # P8
+set_io tdi	102 # P9
+set_io tms	99  # P10
+set_io tck	97 	# P11
 
 # PMOD 14 - LEDs
 set_io led2	67	# LED3, P54
