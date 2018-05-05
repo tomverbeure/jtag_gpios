@@ -43,11 +43,11 @@ module top(
         reset_ <= 1'b1;
     end
 
-    assign led0 = gpio_outputs_ena[0] ? gpio_outputs[0] : 1'bz;
-    assign led1 = gpio_outputs_ena[1] ? gpio_outputs[1] : 1'bz;
+    assign led0 = gpio_outputs[0];
+    assign led1 = gpio_outputs[1];
 
-    assign gpio_inputs[0] = led0;
-    assign gpio_inputs[1] = led1;
+    assign gpio_inputs[0] = gpio_outputs[0];
+    assign gpio_inputs[1] = gpio_outputs[1];
     assign gpio_inputs[2] = button_;
 
     reg [31:0] counter;
