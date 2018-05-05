@@ -1,0 +1,19 @@
+
+
+# PMOD 3 - JTAG interface
+set_io tck 	105 	# P8
+set_io tms	102 	# P9
+set_io tdi	99 	# P10
+set_io tdo	97 	# P11
+
+# PMOD 14 - LEDs
+set_io led2	67	# LED3, P54
+set_io led1	68	# LED2, P53
+set_io led0	70	# LED1, P52
+
+# Buttons
+set_io button_	63 	# Button 1, B1
+
+# Onboard 100MHz oscillator
+set_io	clk 	129
+
