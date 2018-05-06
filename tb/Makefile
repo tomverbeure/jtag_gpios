@@ -8,6 +8,7 @@ VERILOG_ALTERA = $(VERILOG_COMMON) $(RTL_DIR)/jtag_tap_altera.v
 VERILOG_TB = testbench.v
 
 all: sim_generic 
+	./sim_generic
 
 sim_generic: $(VERILOG_TB) $(VERILOG_GENERIC) 
 	iverilog -D JTAG_TAP_GENERIC -I $(RTL_DIR) $(VERILOG_TB) $(VERILOG_GENERIC) -o $@
