@@ -1,4 +1,6 @@
 
+`default_nettype none
+
 module top(
     input   wire        clk,
 
@@ -36,7 +38,6 @@ module top(
         .gpio_outputs(gpio_outputs),
         .gpio_outputs_ena(gpio_outputs_ena)
     );
-
 
     reg reset_;
     always @(posedge clk) begin

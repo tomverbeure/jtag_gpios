@@ -1,6 +1,8 @@
 
 `include "jtag_tap_defines.v"
 
+`default_nettype none
+
 module jtag_top #(
         parameter NR_GPIOS = 1
     ) 

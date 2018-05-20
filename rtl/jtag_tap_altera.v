@@ -1,5 +1,6 @@
 `define ALTERA_VJTAG
-//`define JTAG
+
+`default_nettype none
 
 module jtag_tap_altera
     #( 

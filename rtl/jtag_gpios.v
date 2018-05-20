@@ -1,4 +1,6 @@
 
+`default_nettype none
+
 module jtag_gpios
     #(
         parameter NR_GPIOS = 1
