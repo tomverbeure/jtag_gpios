@@ -37,7 +37,7 @@ For more info, check out my blog post that goes along with this:
  
 
 
-## LICENSE
+## License
 
 All code is released under an [Unlicense license](https://unlicense.org/), except the code that was not
 written by me:
