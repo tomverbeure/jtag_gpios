@@ -1,4 +1,6 @@
 
+QUARTUS_ROOTDIR = ~/altera/13.0sp1/quartus/
+
 all: synth_generic
 
 synth_altera:
