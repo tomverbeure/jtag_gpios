@@ -19,19 +19,19 @@ For more info, check out my blog post that goes along with this:
 
     Simulation testbench
 
-* `altera`
+* `./altera`
 
     Quartus build files for an EP2C5T144 FPGA board.
 
-* `ice40`
+* `,.ice40`
 
     ICE40 build files for a BlackIce-II FPGA board
 
-* `openocd/basic`
+* `./openocd/basic`
 
     Example on how to control the generic JTAG TAP with OpenOCD and TCL commands.
 
-* `openocd/target`
+* `./openocd/target`
 
     Example on how to control the generic JTAG TAP with OpenOCD and a Python script
  
